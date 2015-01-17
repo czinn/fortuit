@@ -26,23 +26,20 @@
       </span>
     </div>
     <div class="view" ng-show="view == 'home'">
-      <form novalidate>
-        <div>
-          <textarea placeholder="New prediction" ng-model="new_prediction_desc"></textarea>
-        </div>
-        <div>
-          <label>True: </label>
-          <span ng-repeat="confidence in confidences">
-            <button ng-click="submit(confidence)">{{ confidence }}</button>
-          </span>
-        </div>
-        <div>
-          <label>False: </label>
-          <span ng-repeat="confidence in confidences">
-            <button ng-click="submit(100-confidence)">{{ confidence }}</button>
-          </span>
-        </div>
-      </form>
+      <div class="prediction">
+        <form novalidate>
+          <div>
+            <textarea placeholder="Describe your prediction (optional)" ng-model="new_prediction_desc"></textarea>
+          </div>
+          <div>
+            <label>Confidence</label><br>
+            <span ng-repeat="confidence in probabilities">
+              <button ng-click="submit(confidence)">{{ confidence }}%</button>
+            </span>
+          </div>
+        </form>
+      </div>
+      <h2>To validate</h2>
       <div class="prediction" ng-repeat="prediction in predictions">
         <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
         {{ prediction.percent }}% chance of occuring.

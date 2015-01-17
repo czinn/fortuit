@@ -1,13 +1,10 @@
-@nav-color: #4683c6;
-@bg-color: #ffffff;
-
-@button-color: #ffffff;
-@selected-color: #bbbbbb;
+@import "global.less";
+@import "forms.less";
 
 body {
   padding: 0px;
   margin: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px @font-family;
   background: @bg-color;
 }
 
@@ -16,7 +13,7 @@ a {
 }
 
 img.logo {
-  display: block;
+  display: inline;
   margin: 0 auto;
   padding: 5px;
 }
@@ -45,4 +42,18 @@ img.logo {
   box-sizing: border-box;
   padding: 10px;
   width: 100%;
+}
+
+button {
+  background: transparent;
+  border: 1px solid fadeout(@nav-color, 60%);
+  padding: 5px;
+  margin: 2px;
+}
+
+div.prediction {
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid fadeout(@nav-color, 60%);
 }
