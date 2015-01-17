@@ -22,7 +22,7 @@ angular.module('FortuitApp', [])
         })
         .error(function(data) {
           console.log('Failed at getting data');
-          
+
           cb(null);
         });
     }
@@ -30,6 +30,7 @@ angular.module('FortuitApp', [])
     $scope.setView = function(view) {
       // Do onload stuff
       if(view === 'home') {
+        $scope.new_prediction_confidence = 50;
         $scope.predictions = [];
         getPredictions({resolved: false}, function(data) {
           if(data !== null) {
@@ -76,8 +77,8 @@ angular.module('FortuitApp', [])
       window.location = '/logout';
     };
 
-    $scope.submitPrediction = function(confidence) {
-      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: confidence}).
+    $scope.submitPrediction = function() {
+      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: $scope.new_prediction_confidence}).
         success(function(prediction) {
           $scope.predictions.unshift(prediction);
         });

@@ -32,23 +32,24 @@
             <textarea placeholder="Describe your prediction (optional)" ng-model="new_prediction_desc"></textarea>
           </div>
           <div>
-            <label>Confidence</label><br>
-            <span ng-repeat="confidence in probabilities">
-              <button ng-click="submitPrediction(confidence)">{{ confidence }}%</button>
-            </span>
+            <span class="bignumber">{{ new_prediction_confidence }}%</span><br>
+            <input type="range" min="1" max="99" ng-model="new_prediction_confidence"><br>
+            <button ng-click="submitPrediction()">Submit prediction</button>
           </div>
         </form>
       </div>
       <h2>To validate</h2>
       <div class="prediction" ng-repeat="prediction in predictions">
-        <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
-        {{ prediction.confidence }}% chance of occuring.
+        <h3>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</h3>
+        <p>{{ prediction.confidence }}% chance of occuring.</p>
+        <p>Did this happen?</p>
+        <button ng-click="">Yes</button><button>No</button>
       </div>
     </div>
     <div class="view" ng-show="view == 'archive'">
       <div class="prediction" ng-repeat="prediction in predictions">
         <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
-        {{ prediction.confidence  }}% chance of occuring.
+        {{ prediction.confidence }}% chance of occuring.
       </div>
     </div>
     <div class="view" ng-show="view == 'data'">
