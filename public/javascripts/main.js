@@ -101,5 +101,17 @@ angular.module('FortuitApp', [])
         });
     };
 
+    $scope.deletePrediction = function(prediction, result) {
+      $http.delete('/api/predictions/' + prediction._id, {result: result})
+        .success(function(affair) {
+          for(var i = 0; i < $scope.predictions.length; i++) {
+            if($scope.predictions[i]._id === prediction._id) {
+              $scope.predictions.splice(i, 1);
+              break;
+            }
+          }
+        })
+    };
+
     $scope.setView('home');
   }]);

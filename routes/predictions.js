@@ -38,4 +38,18 @@ router.post('/', function(req, res, next) {
   });
 });
 
+/* DELETE prediction */
+router.delete('/:id', function(req, res, next) {
+  if(!req.user) {
+    return res.send({'error': 'must be logged in'});
+  }
+  if(req.params.id === 'me' && req.user)
+    req.params.id = req.user._id;
+
+  Prediction.findByIdAndRemove(req.params.id, function(err, predictions) {
+    predictions.remove();
+  });
+  res.send({});
+});
+
 module.exports = router;
