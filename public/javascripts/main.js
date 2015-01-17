@@ -7,6 +7,8 @@ angular.module('FortuitApp', [])
     $scope.pageCount = 1;
     $scope.user = user;
 
+    var lineChart = null;
+
     function getPredictions(options, cb) {
       var queryString = "/api/users/me/predictions";
       if(options.count)
@@ -26,6 +28,58 @@ angular.module('FortuitApp', [])
 
           cb(null);
         });
+    }
+
+    function renderGraph(data) {
+      if(lineChart !== null) {
+        lineChart.destroy();
+      }
+
+      var ctx = document.getElementById("statGraph").getContext("2d");
+      console.log(ctx.canvas.parentNode);
+      ctx.canvas.height *= Math.round((window.innerWidth - 20) / ctx.canvas.width);
+      ctx.canvas.width = window.innerWidth - 20;
+
+      var chart = new Chart(ctx);
+      var chartData = {
+        labels: [],
+        datasets: [{
+          label: "probabilities",
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: []
+        },
+        {
+          label: "target",
+          fillColor: "rgba(255,255,0,0.2)",
+          strokeColor: "rgba(255,255,0,1)",
+          pointColor: "rgba(255,255,0,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: []
+        }]
+      };
+      var options = {
+        pointDot: false,
+        datasetFill: false,
+        showTooltips: false
+      };
+      for(var i = 0; i < data.barGraph.bars.length; i++) {
+        if(i === 0)
+          chartData.labels.push("1");
+        else if(i === data.barGraph.bars.length - 1)
+          chartData.labels.push("99")
+        else
+          chartData.labels.push(data.barGraph.bars[i].x + "");
+        chartData.datasets[0].data.push(data.barGraph.bars[i].y);
+        chartData.datasets[1].data.push(data.barGraph.bars[i].x);
+      }
+      lineChart = chart.Line(chartData, options);
     }
 
     $scope.setView = function(view) {
@@ -56,6 +110,15 @@ angular.module('FortuitApp', [])
             $scope.view = 'archive';
           }
         });
+      } else if(view === 'stats') {
+        $http.get('/api/users/me/stats')
+          .success(function(data) {
+            renderGraph(data);
+            $scope.view = 'stats';
+          })
+          .error(function(data) {
+            $scope.view = 'stats';
+          });
       } else {
         $scope.view = view;
       }

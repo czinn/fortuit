@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Prediction = require('../models/prediction');
+var analyze = require('./analyze');
 
 var PAGE_SIZE = 10;
 
@@ -73,6 +74,16 @@ router.get('/:id/predictions/pages', function(req, res, next) {
   getPredictions(req.params.id, options, function(err, count) {
     if(err) return res.send({'error': 'could not find predictions'});
     res.send({count: Math.ceil(count / PAGE_SIZE)});
+  });
+});
+
+router.get('/:id/stats', function(req, res, next) {
+  if(req.params.id === 'me' && req.user)
+    req.params.id = req.user._id;
+
+  getPredictions(req.params.id, {resolved: true}, function(err, predictions) {
+    if(err) return res.send({'error': 'could not find predictions to generate data'});
+    res.send(analyze(predictions));
   });
 });
 
