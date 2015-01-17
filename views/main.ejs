@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="FortuitApp">
   <head>
     <title>Fortuit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="lib/angular/angular.js"></script>
+    <script src="/javascripts/main.js"></script>
   </head>
-  <body>
-    <p>Logged in as <%= user.name %></p>
+  <body ng-controller="MainCtrl">
+    <div id="navBar" onselectstart="return false;">
+      <i class="fa fa-home selected" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
+      <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
+      <i class="fa fa-group" ng-class="{selected: view == 'group'}" ng-click="setView('group')"></i>
+      <i class="fa fa-sign-out" style="float: right" ng-click="logout()"></i>
+    </div>
+    <div class="view" ng-show="view == 'home'">
+      <p>Logged in as <%= user.name %></p>
+    </div>
+    <div class="view" ng-show="view == 'data'">
+      <h1>Data</h1>
+    </div>
+    <div class="view" ng-show="view == 'group'">
+      <h1>Friends</h1>
+    </div>
   </body>
 </html>

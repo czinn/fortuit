@@ -16,9 +16,21 @@ router.post('/login',
   })
 );
 
+/* GET logout handler */
+router.get('/logout', function(req, res, next) {
+  if(req.user) {
+    req.logout();
+  }
+  res.redirect('/');
+});
+
 /* GET main app page */
 router.get('/main', function(req, res, next) {
-  res.render('main', {user: req.user});
+  if(!req.user) {
+    res.redirect('/');
+  } else {
+    res.render('main', {user: req.user});
+  }
 });
 
 module.exports = router;
