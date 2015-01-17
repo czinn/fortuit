@@ -56,6 +56,18 @@ angular.module('FortuitApp', [])
             $scope.view = 'archive';
           }
         });
+      } else if(view === 'friends') {
+        $scope.friends = [];
+        $http.get("/api/users/me/friends")
+          .success(function(data) {
+            if(data !== null) {
+              $scope.friends = data['friends'];
+            }
+            $scope.view = 'friends';
+          });
+      } else if(view === 'profile') {
+        // TODO: implement
+        $scope.view = 'profile';
       } else {
         $scope.view = view;
       }
@@ -110,7 +122,14 @@ angular.module('FortuitApp', [])
               break;
             }
           }
-        })
+        });
+    };
+
+    $scope.addFriend = function() {
+      $http.post('/api/users/me/add-friend', {newFriendName: $scope.newFriendName})
+        .success(function(newFriend) {
+          $scope.friends.push(newFriend);
+        });
     };
 
     $scope.setView('home');

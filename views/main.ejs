@@ -23,7 +23,7 @@
       <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
       <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
       <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
-      <i class="fa fa-group" ng-class="{selected: view == 'group'}" ng-click="setView('group')"></i>
+      <i class="fa fa-group" ng-class="{selected: view == 'friends'}" ng-click="setView('friends')"></i>
       <span style="float: right">
           <i class="fa fa-sign-out" ng-click="logout()"></i>
       </span>
@@ -61,8 +61,18 @@
     <div class="view" ng-show="view == 'data'">
       <h1>Data</h1>
     </div>
-    <div class="view" ng-show="view == 'group'">
-      <h1>Friends</h1>
+    <div class="view" ng-show="view == 'friends'">
+      <h1>Friends !!</h1>
+      <div class="friend" ng-repeat="friend in friends">
+        <h2>{{ friend.name }}</h2>
+      </div>
+      <form novalidate>
+        <input type="text" ng-model="newFriendName" placeholder="New friend?">
+        <button ng-click="addFriend()">Add friend</button>
+      </form>
+    </div>
+    <div class="view" ng-show="view == 'profile'">
+      <h1>{{ viewedUser.name }}</h1>
     </div>
   </body>
 </html>

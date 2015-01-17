@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt-nodejs');
 var UserSchema = mongoose.Schema({
   name: String,
   password: String,
+  friends: [{ type: Schema.ObjectId, ref: 'User' }],
 });
 
 UserSchema.methods.validPassword = function(password) {

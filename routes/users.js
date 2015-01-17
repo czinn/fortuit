@@ -76,4 +76,46 @@ router.get('/:id/predictions/pages', function(req, res, next) {
   });
 });
 
+/* GET user's friends */
+router.get('/:id/friends', function(req, res, next) {
+  if(req.params.id === 'me' && req.user)
+    req.params.id = req.user._id;
+
+  User.findById(req.params.id).populate('friends').exec(function (err, user) {
+    if(err) return res.send({'error': 'could not find friends'});
+    res.send(user);
+  });
+});
+
+/* POST add a friend to an existing user */
+router.post('/:id/add-friend', function(req, res, next) {
+  // Ensure logged in
+  if(!req.user) {
+    return res.send({'error': 'must be logged in'});
+  }
+  if(req.params.id != 'me') {
+    return res.send({'error': 'can only add friends to yourself'});
+  }
+
+  // Ensure friend is specified
+  if(!req.body.newFriendName) {
+    return res.send({'error': 'invalid friend'});
+  }
+  // and is not me
+
+  User.findOne({name: req.body.newFriendName}, function(err, newFriend) {
+    if(err || !newFriend) return res.send({'error': 'could not find user'});
+    if(req.user.friends.indexOf(newFriend._id) != -1) return res.send({'error': 'already on friend list'});
+    User.findOneAndUpdate(
+      {_id: req.user._id},
+      {$push: {friends: newFriend._id}},
+      {safe: true, upsert: true},
+      function (err, model) {
+        console.log(err);
+        res.send(newFriend);
+      }
+    );
+  });
+});
+
 module.exports = router;
