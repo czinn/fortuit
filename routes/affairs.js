@@ -9,12 +9,12 @@ router.post('/:id', function(req, res, next) {
     return res.send({'error': 'must be logged in'});
   }
 
-  if(!req.body.result || typeof req.body.result !== 'boolean') {
+  if(req.body.result === undefined || typeof req.body.result !== 'boolean') {
     return res.send({'error': 'invalid result'});
   }
 
   Affair.findById(req.params.id, function(err, affair) {
-    if(err) return res.send({'error': 'could not find affair'});
+    if(err || affair === null) return res.send({'error': 'could not find affair'});
 
     if(affair.user + "" !== "" + req.user._id) {
       return res.send({'error': 'must be affair owner'});

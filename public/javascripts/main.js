@@ -78,9 +78,23 @@ angular.module('FortuitApp', [])
     };
 
     $scope.submitPrediction = function() {
-      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: $scope.new_prediction_confidence}).
-        success(function(prediction) {
+      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: $scope.new_prediction_confidence})
+        .success(function(prediction) {
           $scope.predictions.unshift(prediction);
+        });
+    };
+
+    $scope.resolvePrediction = function(prediction, result) {
+      $http.post('/api/affairs/' + prediction.affair._id, {result: result})
+        .success(function(affair) {
+          // Don't really care about the affair
+          for(var i = 0; i < $scope.predictions.length; i++) {
+            if($scope.predictions[i]._id === prediction._id) {
+              $scope.predictions.splice(i, 1);
+              break;
+            }
+          }
+          console.log(affair);
         });
     };
 
