@@ -16,16 +16,16 @@
       <div>
         <img class='logo' src="/images/logo.svg" width=150>
       </div>
-      <i class="fa fa-home selected" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
+      <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
+      <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
       <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
       <i class="fa fa-group" ng-class="{selected: view == 'group'}" ng-click="setView('group')"></i>
       <span style="float: right">
-        Logged in as <%= user.name %>
+        <%= user.name %>
         <i class="fa fa-sign-out" ng-click="logout()"></i>
       </span>
     </div>
     <div class="view" ng-show="view == 'home'">
-      <h1>Home</h1>
       <form novalidate>
         <div>
           <textarea placeholder="New prediction" ng-model="new_prediction_desc"></textarea>
@@ -43,6 +43,12 @@
           </span>
         </div>
       </form>
+      <div class="prediction" ng-repeat="prediction in predictions">
+        <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
+        {{ prediction.percent }}% chance of occuring.
+      </div>
+    </div>
+    <div class="view" ng-show="view == 'archive'">
       <div class="prediction" ng-repeat="prediction in predictions">
         <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
         {{ prediction.percent }}% chance of occuring.

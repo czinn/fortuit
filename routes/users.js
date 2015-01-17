@@ -51,7 +51,7 @@ function getPredictions(id, options, cb) {
 router.get('/:id/predictions', function(req, res, next) {
   if(req.params.id === 'me' && req.user)
     req.params.id = req.user._id;
-  
+
   var options = {};
   if(req.params.page) options.page =  parseInt(req.params.page);
   if(req.query.resolved) options.resolved = req.query.resolved === 'true';
@@ -62,7 +62,7 @@ router.get('/:id/predictions', function(req, res, next) {
   });
 });
 
-router.get('/:id/predictions/count', function(req, res, next) {
+router.get('/:id/predictions/pages', function(req, res, next) {
   if(req.params.id === 'me' && req.user)
     req.params.id = req.user._id;
 
@@ -72,7 +72,7 @@ router.get('/:id/predictions/count', function(req, res, next) {
 
   getPredictions(req.params.id, options, function(err, count) {
     if(err) return res.send({'error': 'could not find predictions'});
-    res.send({count: count});
+    res.send({count: Math.ceil(count / PAGE_SIZE)});
   });
 });
 
