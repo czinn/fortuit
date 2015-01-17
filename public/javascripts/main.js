@@ -10,7 +10,12 @@ angular.module('FortuitApp', [])
     var lineChart = null;
 
     function getPredictions(options, cb) {
-      var queryString = "/api/users/me/predictions";
+      var queryString = "/api/users/"
+      if(options.userId)
+        queryString += options.userId;
+      else
+        queryString += "me"
+      queryString += "/predictions";
       if(options.count)
         queryString += "/pages";
       if(options.resolved !== undefined)
@@ -121,9 +126,23 @@ angular.module('FortuitApp', [])
             }
             $scope.view = 'friends';
           });
-      } else if(view === 'profile') {
-        // TODO: implement
-        $scope.view = 'profile';
+      } else if(view.indexOf('friends/') == 0) {
+        var friendId = view.slice(8);
+        $http.get("/api/users/" + friendId)
+          .success(function(friend) {
+            $scope.friend = friend;
+            getPredictions({count: true, userId: $scope.friend._id, resolved: true}, function(pageCount) {
+              if(pageCount !== null) {
+                $scope.pageCount = pageCount.count;
+                getPredictions({resolved: true, userId: $scope.friend._id, page: 0}, function(data) {
+                  if(data !== null) {
+                    $scope.predictions = data;
+                  }
+                  $scope.view = view;
+                });
+              }
+            })
+          });
       } else if(view === 'stats') {
         $http.get('/api/users/me/stats')
           .success(function(data) {
@@ -142,7 +161,19 @@ angular.module('FortuitApp', [])
       if($scope.view === 'archive') {
         if($scope.page + delta >= 0 && $scope.page + delta < $scope.pageCount) {
           $scope.page += delta;
-          getPredictions({resolved: true, page: $scope.page}, function(data) {
+          var opts = {resolved: true, page: $scope.page};
+          getPredictions(opts, function(data) {
+            if(data !== null) {
+              $scope.predictions = data;
+            }
+          });
+        }
+      }
+      else if($scope.view.indexOf('friends/') == 0) {
+        if($scope.page + delta >= 0 && $scope.page + delta < $scope.pageCount) {
+          $scope.page += delta;
+          var opts = {resolved: true, userId: $scope.friend._id, page: $scope.page};
+          getPredictions(opts, function(data) {
             if(data !== null) {
               $scope.predictions = data;
             }

@@ -47,7 +47,6 @@ router.delete('/:id', function(req, res, next) {
     req.params.id = req.user._id;
 
   Prediction.findByIdAndRemove(req.params.id, function(err, predictions) {
-    predictions.remove();
   });
   res.send({});
 });
