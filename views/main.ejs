@@ -10,6 +10,7 @@
       var user = {name: "<%= user.name %>", id: "<%= user._id %>"};
     </script>
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/chartjs/Chart.js"></script>
     <script src="/javascripts/main.js"></script>
   </head>
   <body ng-controller="MainCtrl">
@@ -22,7 +23,7 @@
       </div>
       <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
       <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
-      <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
+      <i class="fa fa-bar-chart" ng-class="{selected: view == 'stats'}" ng-click="setView('stats')"></i>
       <i class="fa fa-group" ng-class="{selected: view == 'friends'}" ng-click="setView('friends')"></i>
       <span style="float: right">
           <i class="fa fa-sign-out" ng-click="logout()"></i>
@@ -58,8 +59,14 @@
         <% include prediction %>
       </table>
     </div>
-    <div class="view" ng-show="view == 'data'">
-      <h1>Data</h1>
+    <div class="view" ng-show="view == 'stats'">
+      <canvas id="statGraph"></canvas>
+      <p>
+        The bottom axis of the chart shows your predicted probability, and the left axis shows the actual probability.
+      </p>
+      <p>
+        The yellow line is your goal. If the blue line is above the yellow line, things are more likely than you predict. If the blue line is below the yellow line, they're less likely than you predict.
+      </p>
     </div>
     <div class="view" ng-show="view == 'friends'">
       <h1>Friends !!</h1>

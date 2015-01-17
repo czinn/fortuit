@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Prediction = require('../models/prediction');
+var analyze = require('./analyze');
 
 var PAGE_SIZE = 10;
 
@@ -101,10 +102,10 @@ router.post('/:id/add-friend', function(req, res, next) {
   if(!req.body.newFriendName) {
     return res.send({'error': 'invalid friend'});
   }
-  // and is not me
 
   User.findOne({name: req.body.newFriendName}, function(err, newFriend) {
     if(err || !newFriend) return res.send({'error': 'could not find user'});
+    if(newFriend._id == req.user._id) return res.send({'error': 'cannot friend yourself'});
     if(req.user.friends.indexOf(newFriend._id) != -1) return res.send({'error': 'already on friend list'});
     User.findOneAndUpdate(
       {_id: req.user._id},
@@ -115,6 +116,16 @@ router.post('/:id/add-friend', function(req, res, next) {
         res.send(newFriend);
       }
     );
+  });
+});
+
+router.get('/:id/stats', function(req, res, next) {
+  if(req.params.id === 'me' && req.user)
+    req.params.id = req.user._id;
+
+  getPredictions(req.params.id, {resolved: true}, function(err, predictions) {
+    if(err) return res.send({'error': 'could not find predictions to generate data'});
+    res.send(analyze(predictions));
   });
 });
 
