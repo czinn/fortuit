@@ -1,8 +1,10 @@
 angular.module('FortuitApp', [])
   .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+    $scope.probabilities = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99];
+    $scope.confidences = [50, 60, 70, 80, 90, 99];
     $scope.predictions = [];
 
-    $scope.setView = function(view) { 
+    $scope.setView = function(view) {
       $scope.view = view;
 
       // Do onload stuff
@@ -27,6 +29,14 @@ angular.module('FortuitApp', [])
     $scope.logout = function() {
       window.location = '/logout';
     }
+
+    $scope.submit = function(confidence) {
+      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: confidence/100}).
+        success(function(prediction) {
+          prediction.percent = Math.round(prediction.confidence * 100);
+          $scope.predictions.unshift(prediction);
+        });
+    };
 
     $scope.setView('home');
   }]);

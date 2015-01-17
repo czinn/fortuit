@@ -51,7 +51,7 @@ function getPredictions(id, options, cb) {
 router.get('/:id/predictions', function(req, res, next) {
   if(req.params.id === 'me' && req.user)
     req.params.id = req.user._id;
-
+  
   var options = {};
   if(req.params.page) options.page =  parseInt(req.params.page);
   if(req.query.resolved) options.resolved = req.query.resolved === 'true';
