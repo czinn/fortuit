@@ -13,6 +13,9 @@
   </head>
   <body ng-controller="MainCtrl">
     <div id="navBar" onselectstart="return false;">
+      <div>
+        <img class='logo' src="/images/logo.svg" width=150>
+      </div>
       <i class="fa fa-home selected" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
       <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
       <i class="fa fa-group" ng-class="{selected: view == 'group'}" ng-click="setView('group')"></i>
