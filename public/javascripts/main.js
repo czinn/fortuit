@@ -150,6 +150,7 @@ angular.module('FortuitApp', [])
             })
           });
       } else if(view.indexOf('friends/') == 0 && view.indexOf('/archive') != -1) {
+        $scope.page = 0;
         var friendId = view.substring(8, view.length - 8);
         getPredictions({count: true, userId: $scope.friend._id, resolved: true}, function(pageCount) {
           if(pageCount !== null) {
