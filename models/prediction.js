@@ -9,6 +9,7 @@ var PredictionSchema = mongoose.Schema({
   affair: { type: Schema.ObjectId, ref: 'Affair' },
   created: { type: Date, default: Date.now },
   user: { type: Schema.ObjectId, ref: 'User' },
+  resolved: { type: Boolean, default: false}
 });
 
 var Prediction;

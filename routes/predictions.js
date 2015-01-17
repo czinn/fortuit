@@ -7,6 +7,7 @@ var Affair = require('../models/affair');
 router.get('/', function(req, res, next) {
   Prediction.find()
     .populate('affair')
+    .sort('-created')
     .exec(function(err, predictions) {
     res.send(predictions);
   });
@@ -28,11 +29,12 @@ router.post('/', function(req, res, next) {
     req.body.desc = "";
   }
   var affair = new Affair({user: req.user._id, desc: req.body.desc});
-  affair.save();
-  var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseFloat(req.body.confidence)});
-  prediction.save();
-
-  res.send(prediction);
+  affair.save(function() {
+    var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseFloat(req.body.confidence)});
+    prediction.save(function () {
+      res.send(prediction);
+    });
+  });
 });
 
 module.exports = router;

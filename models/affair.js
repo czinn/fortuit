@@ -7,7 +7,9 @@ var AffairSchema = mongoose.Schema({
   // The user-entered description of the affair.
   desc: { type: String, default: "" }, // empty string means to display date
   created: { type: Date, default: Date.now },
-  user: { type: Schema.ObjectId, ref: 'User' }
+  user: { type: Schema.ObjectId, ref: 'User' },
+  resolved: { type: Boolean, default: false },
+  result: { type: Boolean }
 });
 
 var Affair;

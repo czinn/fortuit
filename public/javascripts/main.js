@@ -12,7 +12,7 @@ angular.module('FortuitApp', [])
             if(data.error) {
               $scope.predictions = [];
             } else {
-              $scope.predictions = data;
+              $scope.predictions = data; 
               $scope.predictions.forEach(function(prediction) {
                 prediction.percent = Math.round(prediction.confidence * 100);
               });
