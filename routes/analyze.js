@@ -37,5 +37,15 @@ module.exports = function(predictions) {
     binSize: BIN_SIZE
   };
 
+  // Calculate R^2 for line
+  var xMean = results.reduce(function(a, b) { return a + b.x }, 0) / results.length;
+  var yMean = results.reduce(function(a, b) { return a + b.y }, 0) / results.length;
+  var r = results.reduce(function(a, b) { return a + (b.x - xMean) * (b.y - yMean) }, 0) /
+      Math.sqrt(
+        results.reduce(function(a, b) { return a + (b.x - xMean) * (b.x - xMean) }, 0) *
+        results.reduce(function(a, b) { return a + (b.y - yMean) * (b.y - yMean) }, 0)
+      );
+  obj.score = Math.round(r * r * 1000) / 10;
+
   return obj;
 };
