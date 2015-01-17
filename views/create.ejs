@@ -8,8 +8,9 @@
     <link rel="icon" href="/favicon.png" type="image/x-icon" />
   </head>
   <body>
-    <img class='logo' src="/images/logo.svg" width=200>
-    <form action="/login" method="post">
+    <a href='/'><img class='logo' src="/images/logo.svg" width=200></a>
+    <% if(error) { %><p><%= error %></p><% } %>
+    <form action="/create" method="post">
       <div>
         <input type="text" name="username" placeholder="Username">
       </div>
@@ -17,9 +18,11 @@
         <input type="password" name="password" placeholder="Password">
       </div>
       <div>
-        <input type="submit" value="Log In">
+        <input type="password" name="confirm" placeholder="Confirm Password">
+      </div>
+      <div>
+        <input type="submit" value="Create Account">
       </div>
     </form>
-    <p><a href="/create">Create an account</a></p>
   </body>
 </html>

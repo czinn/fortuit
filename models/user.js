@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = mongoose.Schema({
   name: String,
+  name_lower: String,
   password: String,
   friends: [{ type: Schema.ObjectId, ref: 'User' }],
 });
@@ -14,6 +15,8 @@ UserSchema.methods.validPassword = function(password) {
 
 UserSchema.pre('save', function(next) {
   var user = this;
+
+  user.name_lower = user.name.toLowerCase();
 
   if(!user.isModified('password')) return next();
 
