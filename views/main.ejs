@@ -26,18 +26,20 @@
       </span>
     </div>
     <div class="view" ng-show="view == 'home'">
-      <div class="prediction">
-        <form novalidate>
-          <div>
-            <textarea placeholder="Describe your prediction (optional)" ng-model="new_prediction_desc"></textarea>
-          </div>
-          <div>
-            <span class="bignumber">{{ new_prediction_confidence }}%</span><br>
-            <input type="range" min="1" max="99" ng-model="new_prediction_confidence"><br>
-            <button ng-click="submitPrediction()">Submit prediction</button>
-          </div>
-        </form>
-      </div>
+      <form novalidate>
+        <table class="prediction">
+          <tr>
+            <td class="percentage">
+              {{ new_prediction_confidence }}%<br>
+            </td>
+            <td>
+              <textarea placeholder="Describe your prediction (optional)" ng-model="new_prediction_desc"></textarea>
+              <input type="range" min="1" max="99" ng-model="new_prediction_confidence"><br>
+              <button ng-click="submitPrediction()">Submit prediction</button>
+            </td>
+          </tr>
+        </table>
+      </form>
       <h2>Pending Resolution</h2>
       <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
