@@ -41,7 +41,33 @@ function getPredictions(id, options, cb) {
     }
     query.populate('affair');
     if(!options.count) {
-      query.exec(cb);
+      query.exec(function(err, predictions) {
+        if(err) return cb(err, predictions);
+        var started = 0;
+        for(var i = 0; i < predictions.length; i++) {
+          predictions[i] = JSON.parse(JSON.stringify(predictions[i]));
+          if(predictions[i].affair.user + "" === "" + id) {
+            predictions[i].affair.user = {name: user.name, _id: user._id};
+          } else {
+            started += 1;
+            (function(j) {
+              User.findById(predictions[j].affair.user, function(err, user) {
+                if(user !== null) {
+                  predictions[j].affair.user = {name: user.name, _id: user._id};
+                }
+                started -= 1;
+                if(started === 0 && i >= predictions.length) {
+                  cb(null, predictions);
+                  started = -1;
+                }
+              });
+            })(i);
+          }
+        }
+        if(started === 0) {
+          cb(null, predictions);
+        }
+      });
     } else {
       query.count(cb);
     }

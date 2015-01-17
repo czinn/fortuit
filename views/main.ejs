@@ -46,7 +46,6 @@
           </tr>
         </table>
       </form>
-      <h2>Pending Resolution</h2>
       <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
       </table>
@@ -106,6 +105,22 @@
     </div>
     <div class="view" ng-show="view == 'profile'">
       <h1>{{ viewedUser.name }}</h1>
+    </div>
+    <div class="popover" ng-show="predictionPopover" ng-click="hidePopover()">
+      <form ng-click="$event.stopPropagation()" novalidate>
+        <table class="prediction">
+          <tr>
+            <td class="percentage">
+              {{ new_prediction_confidence }}%<br>
+            </td>
+            <td>
+              {{ predictionPopover.affair.user.name }}: {{ predictionPopover.affair.desc }}<br>
+              <input type="range" min="1" max="99" ng-model="new_prediction_confidence"><br>
+              <button ng-click="submitPopoverPrediction()">Submit prediction</button>
+            </td>
+          </tr>
+        </table>
+      </form>
     </div>
   </body>
 </html>

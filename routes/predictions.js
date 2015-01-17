@@ -27,15 +27,29 @@ router.post('/', function(req, res, next) {
   if(!req.body.desc) {
     req.body.desc = "";
   }
-  var affair = new Affair({user: req.user._id, desc: req.body.desc});
-  affair.save(function() {
-    var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseInt(req.body.confidence)});
-    prediction.save(function () {
-      prediction.populate('affair', function(err, prediction) {
-        res.send(prediction);
+  if(!req.query.affair) {
+    var affair = new Affair({user: req.user._id, desc: req.body.desc});
+    affair.save(function() {
+      var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseInt(req.body.confidence)});
+      prediction.save(function () {
+        prediction.populate('affair', function(err, prediction) {
+          prediction = JSON.parse(JSON.stringify(prediction));
+          prediction.affair.user = {_id: prediction.affair.user};
+          res.send(prediction);
+        });
       });
     });
-  });
+  } else {
+    Affair.findById(req.query.affair, function(err, affair) {
+      if(err) return res.send({'error': 'invalid affair'});
+      var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseInt(req.body.confidence)});
+      prediction.save(function () {
+        prediction.populate('affair', function(err, prediction) {
+          res.send(prediction);
+        });
+      });
+    });
+  }
 });
 
 /* DELETE prediction */
@@ -46,9 +60,19 @@ router.delete('/:id', function(req, res, next) {
   if(req.params.id === 'me' && req.user)
     req.params.id = req.user._id;
 
-  Prediction.findByIdAndRemove(req.params.id, function(err, predictions) {
+  Prediction.findById(req.params.id).populate('affair').exec(function(err, prediction) {
+    if(prediction.user + "" !== "" + prediction.affair.user) {
+      prediction.remove();
+      res.send({});
+    } else {
+      // Must remove affair and all its children too
+      Affair.findByIdAndRemove(prediction.affair._id, function(err, data) {
+        Prediction.remove({affair: prediction.affair._id}, function(err, data) {
+          res.send({});
+        });
+      });
+    }
   });
-  res.send({});
 });
 
 module.exports = router;

@@ -6,6 +6,7 @@ angular.module('FortuitApp', [])
     $scope.page = 0;
     $scope.pageCount = 1;
     $scope.user = user;
+    $scope.predictionPopover = false;
 
     var lineChart = null;
 
@@ -247,6 +248,24 @@ angular.module('FortuitApp', [])
           $scope.friends.push(newFriend);
         });
       $scope.newFriendName = "";
+    };
+
+    $scope.popoverPrediction = function(prediction) {
+      $scope.predictionPopover = prediction;
+    }
+
+    $scope.hidePopover = function() {
+      $scope.predictionPopover = null;
+    }
+
+    $scope.submitPopoverPrediction = function() {
+      $http.post('/api/predictions?affair=' + $scope.predictionPopover.affair._id, {confidence: $scope.new_prediction_confidence})
+        .success(function(prediction) {
+          $scope.new_prediction_desc = "";
+          $scope.new_prediction_confidence = 50;
+          $scope.setView('home');
+        });
+      $scope.predictionPopover = null;
     };
 
     $scope.setView('home');
