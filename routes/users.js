@@ -37,7 +37,6 @@ function getPredictions(id, options, cb) {
     }
     if(options.page !== undefined) {
       query.skip(options.page * PAGE_SIZE).limit(PAGE_SIZE);
-      console.log("limiting!");
     }
     query.populate('affair');
     if(!options.count) {
