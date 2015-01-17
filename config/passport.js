@@ -3,6 +3,7 @@ var passport = require('passport')
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
+    console.log("Trying " + username + " and " + password);
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
