@@ -10,7 +10,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 // Mongoose connection
-mongoose.connect('mongodb://localhost/fortuit');
+mongoose.connect('mongodb://104.236.5.93/fortuit');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 db.once('open', function () {
