@@ -1,0 +1,42 @@
+table.prediction {
+  position: relative;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 0px;
+  border: 1px solid fadeout(@nav-color, 60%);
+  width: 100%;
+  //border-collapse: collapse;
+  border-spacing: 0px;
+
+  td {
+    padding: 5px;
+  }
+
+  i.fa-close {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    font-size: 16px;
+    color: fadeout(@nav-color, 60%);
+  }
+
+  .percentage {
+    font-size: 30px;
+    text-align: right;
+    width: 40px;
+    background-color: fadeout(@nav-color, 60%);
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  .close {
+    width: 10px;
+  }
+
+  .buttons {
+    text-align: center;
+    button {
+      width: 40%;
+    }
+  }
+}

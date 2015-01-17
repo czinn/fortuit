@@ -38,15 +38,15 @@
           </div>
         </form>
       </div>
-      <h2>To validate</h2>
-      <div class="prediction" ng-repeat="prediction in predictions">
+      <h2>Pending Resolution</h2>
+      <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
-      </div>
+      </table>
     </div>
     <div class="view" ng-show="view == 'archive'">
-      <div class="prediction" ng-repeat="prediction in predictions">
+      <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
-      </div>
+      </table>
     </div>
     <div class="view" ng-show="view == 'data'">
       <h1>Data</h1>
