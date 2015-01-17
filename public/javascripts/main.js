@@ -82,6 +82,8 @@ angular.module('FortuitApp', [])
       $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: $scope.new_prediction_confidence})
         .success(function(prediction) {
           $scope.predictions.unshift(prediction);
+          $scope.new_prediction_desc = "";
+          $scope.new_prediction_confidence = 50;
         });
     };
 
