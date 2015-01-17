@@ -20,7 +20,6 @@ router.post('/', function(req, res, next) {
     return res.send({'error': 'must be logged in'});
   }
   // Ensure all required fields are filled out
-  console.log(req.body);
   if(!req.body.confidence || parseFloat(req.body.confidence) <= 0.0 || parseFloat(req.body.confidence) >= 1.0) {
     return res.send({'error': 'invalid confidence'});
   }
@@ -32,7 +31,9 @@ router.post('/', function(req, res, next) {
   affair.save(function() {
     var prediction = new Prediction({user: req.user._id, affair: affair._id, confidence: parseFloat(req.body.confidence)});
     prediction.save(function () {
-      res.send(prediction);
+      prediction.populate('affair', function(err, prediction) {
+        res.send(prediction);
+      });
     });
   });
 });

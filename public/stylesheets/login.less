@@ -1,5 +1,8 @@
+@import "global.less";
+
 body {
   text-align: center;
+  background: @nav-color;
 }
 
 /* i.e. the login form */
@@ -7,9 +10,34 @@ form {
   margin: 50px;
 }
 
+img.logo {
+  padding: 30px;
+}
+
 input[type="text"], input[type="password"] {
-  background-color: #fff;
+  color: @bg-color;
+  background-color: transparent;
   border: 0;
   border-bottom: 2px solid #888;
+  border-color: fadeout(@button-color, 60%);
   padding: 5px;
+  margin: 5px;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: @button-color;
+}
+input[type="submit"] {
+  color: @bg-color;
+  border: 1px solid fadeout(@button-color, 60%);
+  background: transparent;
+  padding: 5px;
+  margin: 5px;
+}
+input[type="submit"]:focus {
+  outline: 0;
+  border-color: @button-color;
+}
+input[type="submit"]:active {
+  background: @bg-color;
+  color: @text-color;
 }
