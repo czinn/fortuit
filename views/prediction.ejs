@@ -1,7 +1,7 @@
 <tr>
   <td class="percentage" rowspan="2">{{ prediction.confidence }}%</td>
   <td class="desc">{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</td>
-  <td class="close" rowspan="2" ng-show="prediction.affair.user == user.id && !prediction.resolved"><i class="fa fa-close"></td>
+  <td class="close" rowspan="2" ng-show="prediction.affair.user == user.id && !prediction.resolved"><i class="fa fa-close" ng-click="deletePrediction(prediction)"></td>
 </tr>
 <tr>
   <td class="buttons" ng-show="prediction.affair.user == user.id && !prediction.resolved">
