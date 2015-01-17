@@ -34,7 +34,7 @@
           <div>
             <label>Confidence</label><br>
             <span ng-repeat="confidence in probabilities">
-              <button ng-click="submit(confidence)">{{ confidence }}%</button>
+              <button ng-click="submitPrediction(confidence)">{{ confidence }}%</button>
             </span>
           </div>
         </form>

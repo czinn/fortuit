@@ -13,7 +13,7 @@ angular.module('FortuitApp', [])
             if(data.error) {
               $scope.predictions = [];
             } else {
-              $scope.predictions = data; 
+              $scope.predictions = data;
               $scope.predictions.forEach(function(prediction) {
                 prediction.percent = Math.round(prediction.confidence * 100);
               });
@@ -32,7 +32,7 @@ angular.module('FortuitApp', [])
             if(data.error) {
               $scope.predictions = [];
             } else {
-              $scope.predictions = data; 
+              $scope.predictions = data;
               $scope.predictions.forEach(function(prediction) {
                 prediction.percent = Math.round(prediction.confidence * 100);
               });
@@ -52,7 +52,7 @@ angular.module('FortuitApp', [])
       window.location = '/logout';
     }
 
-    $scope.submit = function(confidence) {
+    $scope.submitPrediction = function(confidence) {
       $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: confidence/100}).
         success(function(prediction) {
           prediction.percent = Math.round(prediction.confidence * 100);
