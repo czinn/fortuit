@@ -56,7 +56,6 @@ router.get('/:id/predictions', function(req, res, next) {
   var options = {};
   if(req.query.page) options.page = parseInt(req.query.page);
   if(req.query.resolved) options.resolved = req.query.resolved === 'true';
-  console.log(options);
 
   getPredictions(req.params.id, options, function(err, predictions) {
     if(err) return res.send({'error': 'could not find predictions'});
