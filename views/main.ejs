@@ -15,19 +15,21 @@
   </head>
   <body ng-controller="MainCtrl">
     <div id="navBar" onselectstart="return false;">
-      <div>
-        <img class='logo' src="/images/logo.svg" width=150>
-        <span style="position: absolute; top: 25px; right: 20px;">
-          <%= user.name %>
+      <div class="container">
+        <div>
+          <img class='logo' src="/images/logo.svg" width=150>
+          <span style="position: absolute; top: 25px; right: 20px;">
+            <%= user.name %>
+          </span>
+        </div>
+        <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
+        <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
+        <i class="fa fa-bar-chart" ng-class="{selected: view == 'stats'}" ng-click="setView('stats')"></i>
+        <i class="fa fa-group" ng-class="{selected: view == 'friends'}" ng-click="setView('friends')"></i>
+        <span style="float: right">
+            <i class="fa fa-sign-out" ng-click="logout()"></i>
         </span>
       </div>
-      <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
-      <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
-      <i class="fa fa-bar-chart" ng-class="{selected: view == 'stats'}" ng-click="setView('stats')"></i>
-      <i class="fa fa-group" ng-class="{selected: view == 'friends'}" ng-click="setView('friends')"></i>
-      <span style="float: right">
-          <i class="fa fa-sign-out" ng-click="logout()"></i>
-      </span>
     </div>
     <div class="view" ng-show="view == 'home'">
       <form novalidate>

@@ -38,9 +38,9 @@ angular.module('FortuitApp', [])
       $scope.statScore = data.score;
 
       var ctx = document.getElementById("statGraph").getContext("2d");
-      console.log(ctx.canvas.parentNode);
-      ctx.canvas.height *= Math.round((window.innerWidth - 20) / ctx.canvas.width);
-      ctx.canvas.width = window.innerWidth - 20;
+      var targetWidth = Math.min(800, window.innerWidth - 20);
+      ctx.canvas.height *= Math.round(targetWidth / ctx.canvas.width);
+      ctx.canvas.width = targetWidth - 20;
 
       var chart = new Chart(ctx);
       var chartData = {
