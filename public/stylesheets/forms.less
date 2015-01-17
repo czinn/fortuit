@@ -5,7 +5,7 @@ textarea {
   width: 100%;
   background: transparent;
   resize: none;
-  font: 14px @font-family;
+  font: @text-size @font-family;
 }
 
 input[type="range"] {
@@ -13,8 +13,12 @@ input[type="range"] {
   margin: 0;
 }
 
+button {
+  font-size: @text-size;
+}
+
 input[type="text"], input[type="password"] {
-  font-size: 16px;
+  font-size: @text-size;
   background-color: transparent;
   border: 0;
   border-bottom: 2px solid #888;

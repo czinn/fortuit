@@ -28,7 +28,7 @@ module.exports = function(predictions) {
     }
     results.push({
       x: i * BIN_SIZE + Math.round(BIN_SIZE / 2),
-      y: Math.round(total / count * 100)
+      y: count > 0 ? Math.round(total / count * 100) : 0
     });
   }
 

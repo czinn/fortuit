@@ -15,6 +15,14 @@ img.logo {
   padding: 30px;
 }
 
+a {
+  color: lighten(@link-color, 20%);
+  cursor: pointer;
+}
+a:hover {
+  color: lighten(@link-color, 40%);
+}
+
 input[type="text"], input[type="password"] {
   color: @bg-color;
   border-color: fadeout(@button-color, 60%);
