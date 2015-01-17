@@ -25,6 +25,10 @@ angular.module('FortuitApp', [])
       $http.get(queryString)
         .success(function(data) {
           if(!data.error) {
+            for (var i=0; i<data.length; i++) {
+              var date = new Date(data[i].created);
+              data[i].niceDate = date.toUTCString();
+            }
             cb(data);
           }
         })

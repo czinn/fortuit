@@ -53,9 +53,9 @@
     </div>
     <div class="view" ng-show="view == 'archive'">
       <div class="paginate">
-        <i class="fa fa-arrow-left" ng-show="page > 0" ng-click="changePage(-1)"></i>
+        <i class="fa fa-arrow-left" ng-class="{hide: page <= 0}" ng-click="changePage(-1)"></i>
         Page {{ page + 1 }} of {{ pageCount }}
-        <i class="fa fa-arrow-right" ng-show="page < pageCount - 1" ng-click="changePage(1)"></i>
+        <i class="fa fa-arrow-right" ng-class="{hide: page >= pageCount - 1}" ng-click="changePage(1)"></i>
       </div>
       <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
@@ -96,9 +96,9 @@
       <h2>{{ friend.name }}</h2>
       <button ng-click="setView('friends/' + friend._id)">Back</button>
       <div class="paginate">
-        <i class="fa fa-arrow-left" ng-show="page > 0" ng-click="changePage(-1)"></i>
+        <i class="fa fa-arrow-left" ng-class="{hide: page <= 0}" ng-click="changePage(-1)"></i>
         Page {{ page + 1 }} of {{ pageCount }}
-        <i class="fa fa-arrow-right" ng-show="page < pageCount - 1" ng-click="changePage(1)"></i>
+        <i class="fa fa-arrow-right" ng-class="{hide: page >= pageCount - 1}" ng-click="changePage(1)"></i>
       </div>
       <table class="prediction" ng-repeat="prediction in predictions">
         <% include prediction %>
