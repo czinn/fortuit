@@ -1,6 +1,7 @@
-@nav-color: #dddddd;
+@nav-color: #4683c6;
 @bg-color: #ffffff;
 
+@button-color: #ffffff;
 @selected-color: #bbbbbb;
 
 body {
@@ -14,27 +15,28 @@ a {
   color: #00B7FF;
 }
 
+img.logo {
+  margin: 5px;
+}
+
 #navBar {
   box-sizing: border-box;
   width: 100%;
   background-color: @nav-color;
-  padding: 10px;
   font-size: 20px;
 }
 
 #navBar i {
-  padding: 5px;
+  padding: 10px;
   cursor: pointer;
-  border-radius: 4px;
   border-style: solid;
-  border-width: 1px;
   border-color: @nav-color;
+  color: fadeout(@button-color, 40%);
 }
 
 #navBar i.selected, #navBar i:active {
-  background-color: @selected-color;
-  border-style: inset;
-  border-color: #FFFFFF;
+  border-bottom: 5px solid @button-color;
+  color: @button-color;
 }
 
 .view {
