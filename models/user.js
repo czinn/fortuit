@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = mongoose.Schema({
   name: String,
-  password: String
+  password: String,
 });
 
 UserSchema.methods.validPassword = function(password) {
