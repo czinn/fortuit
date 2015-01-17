@@ -25,7 +25,7 @@ router.get('/:id', function(req, res, next) {
 router.get('/:id/predictions', function(req, res, next) {
   if(req.params.id === 'me' && req.user)
     req.params.id = req.user._id;
-  
+
   User.findById(req.params.id, function(err, user) {
     if(err) return res.send({'error': 'user not found'});
     Prediction.find({user: user._id})
