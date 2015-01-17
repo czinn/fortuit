@@ -5,6 +5,7 @@ angular.module('FortuitApp', [])
     $scope.predictions = [];
     $scope.page = 0;
     $scope.pageCount = 1;
+    $scope.user = user;
 
     function getPredictions(options, cb) {
       var queryString = "/api/users/me/predictions";
@@ -44,7 +45,7 @@ angular.module('FortuitApp', [])
 
         getPredictions({count: true, resolved: true}, function(pageCount) {
           if(pageCount !== null) {
-            $scope.pageCount = pageCount;
+            $scope.pageCount = pageCount.count;
             getPredictions({resolved: true, page: 0}, function(data) {
               if(data !== null) {
                 $scope.predictions = data;
@@ -63,7 +64,7 @@ angular.module('FortuitApp', [])
     $scope.changePage = function(delta) {
       if($scope.view === 'archive') {
         if($scope.page + delta >= 0 && $scope.page + delta < $scope.pageCount) {
-          $scope.page = delta;
+          $scope.page += delta;
           getPredictions({resolved: true, page: $scope.page}, function(data) {
             if(data !== null) {
               $scope.predictions = data;

@@ -35,8 +35,9 @@ function getPredictions(id, options, cb) {
     if(!options.count) {
       query.sort('-created');
     }
-    if(options.page) {
-      query.skip(page * PAGE_SIZE).limit(PAGE_SIZE);
+    if(options.page !== undefined) {
+      query.skip(options.page * PAGE_SIZE).limit(PAGE_SIZE);
+      console.log("limiting!");
     }
     query.populate('affair');
     if(!options.count) {
@@ -53,8 +54,9 @@ router.get('/:id/predictions', function(req, res, next) {
     req.params.id = req.user._id;
 
   var options = {};
-  if(req.params.page) options.page =  parseInt(req.params.page);
+  if(req.query.page) options.page = parseInt(req.query.page);
   if(req.query.resolved) options.resolved = req.query.resolved === 'true';
+  console.log(options);
 
   getPredictions(req.params.id, options, function(err, predictions) {
     if(err) return res.send({'error': 'could not find predictions'});
