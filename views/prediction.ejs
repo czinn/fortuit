@@ -4,8 +4,8 @@
   <td class="close" rowspan="2" ng-show="prediction.affair.user == user.id && !prediction.resolved">
     <i class="fa fa-close" ng-click="deletePrediction(prediction)">
   </td>
-  <td class="buttons result" ng-show="prediction.resolved">
-    <b>{{ prediction.affair.result ? "Yes" : "No" }}</b>
+  <td class="buttons result" rowspan="2" ng-show="prediction.resolved">
+    {{ prediction.affair.result ? "Yes" : "No" }}
   </td>
 </tr>
 <tr>
@@ -14,7 +14,7 @@
     <button ng-click="resolvePrediction(prediction, false)">No</button>
   </td>
   <td class="buttons" ng-show="prediction.affair.user._id != prediction.user || (prediction.affair.user._id != user.id && prediction.user != user.id && !prediction.resolved)">
-    <span ng-show="prediction.affair.user._id != prediction.user">{{ prediction.affair.user.name }}</span>
+    <span class='affairinfo' ng-show="prediction.affair.user._id != prediction.user">posted by {{ prediction.affair.user.name }}</span>
     <button ng-click="popoverPrediction(prediction)" ng-show="prediction.affair.user._id != user.id && prediction.user != user.id && !prediction.resolved">Make Prediction</button>
   </td>
 </tr>

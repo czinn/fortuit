@@ -17,17 +17,17 @@
     <div id="navBar" onselectstart="return false;">
       <div class="container">
         <div>
-          <img class='logo' src="/images/logo.svg" width=150>
+          <img class='logo' src="/images/logo.svg" width=140px ng-click="setView('home')">
           <span style="position: absolute; top: 25px; right: 20px;">
             <%= user.name %>
           </span>
         </div>
-        <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
-        <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
-        <i class="fa fa-bar-chart" ng-class="{selected: view == 'stats'}" ng-click="setView('stats')"></i>
-        <i class="fa fa-group" ng-class="{selected: view.indexOf('friends') == 0}" ng-click="setView('friends')"></i>
+        <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')" title="Home"></i>
+        <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')" title="Archive"></i>
+        <i class="fa fa-bar-chart" ng-class="{selected: view == 'stats'}" ng-click="setView('stats')" title="Stats"></i>
+        <i class="fa fa-group" ng-class="{selected: view.indexOf('friends') == 0}" ng-click="setView('friends')" title="Friends"></i>
         <span style="float: right">
-            <i class="fa fa-sign-out" ng-click="logout()"></i>
+            <i class="fa fa-sign-out" ng-click="logout()" title="Sign out"></i>
         </span>
       </div>
     </div>
