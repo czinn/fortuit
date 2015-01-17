@@ -3,10 +3,22 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+// Mongoose connection
+mongoose.connect('mongodb://localhost/fortuit');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error: '));
+db.once('open', function () {
+  console.log("Mongoose init'd.");
+});
+
+// Models
+var User = require('./models/user');
 
 var app = express();
 
