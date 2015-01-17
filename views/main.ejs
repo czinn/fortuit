@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script>
+      var user = {name: "<%= user.name %>", id: "<%= user._id %>"};
+    </script>
     <script src="lib/angular/angular.js"></script>
     <script src="/javascripts/main.js"></script>
   </head>
@@ -17,6 +20,10 @@
     </div>
     <div class="view" ng-show="view == 'home'">
       <p>Logged in as <%= user.name %></p>
+      <div class="prediction" ng-repeat="prediction in predictions">
+        <b>{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction " + prediction.created }}</b><br>
+        {{ prediction.percent }}% chance of occuring.
+      </div>
     </div>
     <div class="view" ng-show="view == 'data'">
       <h1>Data</h1>

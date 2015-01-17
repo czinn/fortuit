@@ -11,6 +11,7 @@ var db = require('./models/db');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var predictions = require('./routes/predictions');
 
 var app = express();
 
@@ -32,7 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/lib', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/users', users);
+app.use('/api/predictions', predictions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
