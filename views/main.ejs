@@ -62,6 +62,7 @@
       </table>
     </div>
     <div class="view" ng-show="view == 'stats'">
+      <h2>Score: {{ statScore }}</h2>
       <canvas id="statGraph"></canvas>
       <p>
         The bottom axis of the chart shows your predicted probability, and the left axis shows the actual probability.
@@ -69,23 +70,31 @@
       <p>
         The yellow line is your goal. If the blue line is above the yellow line, things are more likely than you predict. If the blue line is below the yellow line, they're less likely than you predict.
       </p>
-      <h1>Score: {{ statScore }}</h1>
       <p>
         Your score is an overall measurement of your accuracy. The closer to 100, the better!
       </p>
     </div>
     <div class="view" ng-show="view == 'friends'">
-      <h1>Friends !!</h1>
+      <form novalidate>
+        <input type="text" ng-model="newFriendName" placeholder="New friend">
+        <button ng-click="addFriend()"><i class="fa fa-plus"></i></button>
+      </form>
       <div class="friend" ng-repeat="friend in friends">
         <h2><a ng-click="setView('friends/' + friend._id)">{{ friend.name }}</a></h2>
       </div>
-      <form novalidate>
-        <input type="text" ng-model="newFriendName" placeholder="New friend?">
-        <button ng-click="addFriend()">Add friend</button>
-      </form>
     </div>
-    <div class="view" ng-show="view.indexOf('friends/') == 0">
+    <div class="view" ng-show="view.indexOf('friends/') == 0 && view.indexOf('/archive') == -1">
       <h2>{{ friend.name }}</h2>
+      <button ng-click="setView('friends/' + friend._id + '/archive')">Archive</button>
+      <h2>Score: {{ statScore }}</h2>
+      <canvas id="friendGraph"></canvas>
+      <table class="prediction" ng-repeat="prediction in predictions">
+        <% include prediction %>
+      </table>
+    </div>
+    <div class="view" ng-show="view.indexOf('friends/') == 0 && view.indexOf('/archive') != -1">
+      <h2>{{ friend.name }}</h2>
+      <button ng-click="setView('friends/' + friend._id)">Back</button>
       <div class="paginate">
         <i class="fa fa-arrow-left" ng-show="page > 0" ng-click="changePage(-1)"></i>
         Page {{ page + 1 }} of {{ pageCount }}
