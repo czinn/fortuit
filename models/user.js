@@ -23,6 +23,12 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-var User = mongoose.model('User', UserSchema);
+var User;
+try {
+  User = mongoose.model('User', UserSchema);
+}
+catch(e) {
+  User = mongoose.model('User');
+}
 
 module.exports = User;
