@@ -3,23 +3,14 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
 var passportConfig = require('./config/passport'); // obj not used
+var db = require('./models/db');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
-// Mongoose connection
-mongoose.connect('mongodb://104.236.5.93/fortuit');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error: '));
-db.once('open', function () {
-  console.log("Mongoose init'd.");
-});
-
-// Models
-var User = require('./models/user');
 
 var app = express();
 
@@ -33,6 +24,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: 'keyboard cats'}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/lib', express.static(path.join(__dirname, 'bower_components')));
