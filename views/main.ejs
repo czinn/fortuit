@@ -15,14 +15,16 @@
     <div id="navBar" onselectstart="return false;">
       <div>
         <img class='logo' src="/images/logo.svg" width=150>
+        <span style="position: absolute; top: 25px; right: 20px;">
+          <%= user.name %>
+        </span>
       </div>
       <i class="fa fa-home" ng-class="{selected: view == 'home'}" ng-click="setView('home')"></i>
       <i class="fa fa-archive" ng-class="{selected: view == 'archive'}" ng-click="setView('archive')"></i>
       <i class="fa fa-bar-chart" ng-class="{selected: view == 'data'}" ng-click="setView('data')"></i>
       <i class="fa fa-group" ng-class="{selected: view == 'group'}" ng-click="setView('group')"></i>
       <span style="float: right">
-        <%= user.name %>
-        <i class="fa fa-sign-out" ng-click="logout()"></i>
+          <i class="fa fa-sign-out" ng-click="logout()"></i>
       </span>
     </div>
     <div class="view" ng-show="view == 'home'">

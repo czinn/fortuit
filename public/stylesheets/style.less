@@ -15,8 +15,7 @@ a {
 
 img.logo {
   display: inline;
-  margin: 0 auto;
-  padding: 5px;
+  padding: 15px 15px 10px;
 }
 
 #navBar {
@@ -54,4 +53,26 @@ button {
 
 .bignumber {
   font-size: 50px;
+}
+
+/* Placeholder text */
+
+.placeholder-text {
+  color: fadeout(#000, 50%);
+}
+
+::-webkit-input-placeholder {
+  .placeholder-text();
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  .placeholder-text();
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  .placeholder-text();
+}
+
+:-ms-input-placeholder {
+  .placeholder-text();
 }

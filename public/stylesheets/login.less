@@ -42,3 +42,25 @@ input[type="submit"]:active {
   background: @bg-color;
   color: @text-color;
 }
+
+/* Placeholder text */
+
+.placeholder-text {
+  color: fadeout(#fff, 25%);
+}
+
+::-webkit-input-placeholder {
+  .placeholder-text();
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  .placeholder-text();
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  .placeholder-text();
+}
+
+:-ms-input-placeholder {
+  .placeholder-text();
+}
