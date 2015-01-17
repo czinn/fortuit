@@ -9,4 +9,6 @@ db.once('open', function () {
 });
 
 // Models
-//var User = require('./user');
+var User = require('./user');
+var Affair = require('./affair');
+var Prediction = require('./prediction');
