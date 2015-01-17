@@ -27,7 +27,8 @@ angular.module('FortuitApp', [])
           if(!data.error) {
             for (var i=0; i<data.length; i++) {
               var date = new Date(data[i].created);
-              data[i].niceDate = date.toUTCString();
+              months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+              data[i].niceDate = months[date.getMonth()] + " " + date.getDay() + " " + date.getFullYear() + ", " + date.toLocaleTimeString();
             }
             cb(data);
           }
@@ -39,14 +40,14 @@ angular.module('FortuitApp', [])
         });
     }
 
-    function renderGraph(graphId, data) {
+    function renderGraph(data) {
       if(lineChart !== null) {
         lineChart.destroy();
       }
 
       $scope.statScore = data.score;
 
-      var ctx = document.getElementById(graphId).getContext("2d");
+      var ctx = document.getElementById("statGraph").getContext("2d");
       var targetWidth = Math.min(800, window.innerWidth - 20);
       ctx.canvas.height *= Math.round(targetWidth / ctx.canvas.width);
       ctx.canvas.width = targetWidth - 20;
@@ -130,43 +131,27 @@ angular.module('FortuitApp', [])
             }
             $scope.view = 'friends';
           });
-      } else if(view.indexOf('friends/') == 0 && view.indexOf('/archive') == -1) {
+      } else if(view.indexOf('friends/') == 0) {
         var friendId = view.slice(8);
         $http.get("/api/users/" + friendId)
           .success(function(friend) {
             $scope.friend = friend;
-            getPredictions({userId: $scope.friend._id, resolved: false}, function(data) {
-              if(data !== null) {
-                $scope.predictions = data;
+            getPredictions({count: true, userId: $scope.friend._id, resolved: true}, function(pageCount) {
+              if(pageCount !== null) {
+                $scope.pageCount = pageCount.count;
+                getPredictions({resolved: true, userId: $scope.friend._id, page: 0}, function(data) {
+                  if(data !== null) {
+                    $scope.predictions = data;
+                  }
+                  $scope.view = view;
+                });
               }
-              $http.get('/api/users/' + $scope.friend._id + '/stats')
-                .success(function(data) {
-                  renderGraph("friendGraph", data);
-                  $scope.view = view;
-                })
-                .error(function(data) {
-                  $scope.view = view;
-                })
             })
           });
-      } else if(view.indexOf('friends/') == 0 && view.indexOf('/archive') != -1) {
-        $scope.page = 0;
-        var friendId = view.substring(8, view.length - 8);
-        getPredictions({count: true, userId: $scope.friend._id, resolved: true}, function(pageCount) {
-          if(pageCount !== null) {
-            $scope.pageCount = pageCount.count;
-            getPredictions({resolved: true, userId: $scope.friend._id, page: 0}, function(data) {
-              if(data !== null) {
-                $scope.predictions = data;
-              }
-              $scope.view = view;
-            });
-          }
-        });
       } else if(view === 'stats') {
         $http.get('/api/users/me/stats')
           .success(function(data) {
-            renderGraph("statGraph", data);
+            renderGraph(data);
             $scope.view = 'stats';
           })
           .error(function(data) {
@@ -246,7 +231,6 @@ angular.module('FortuitApp', [])
         .success(function(newFriend) {
           $scope.friends.push(newFriend);
         });
-      $scope.newFriendName = "";
     };
 
     $scope.setView('home');
