@@ -34,9 +34,6 @@ angular.module('FortuitApp', [])
         getPredictions({resolved: false}, function(data) {
           if(data !== null) {
             $scope.predictions = data;
-            $scope.predictions.forEach(function(prediction) {
-              prediction.percent = Math.round(prediction.confidence * 100);
-            });
           }
           $scope.view = 'home';
         });
@@ -49,10 +46,7 @@ angular.module('FortuitApp', [])
             $scope.pageCount = pageCount;
             getPredictions({resolved: true, page: 0}, function(data) {
               if(data !== null) {
-                $scope.predictions = data; 
-                $scope.predictions.forEach(function(prediction) {
-                  prediction.percent = Math.round(prediction.confidence * 100);
-                });
+                $scope.predictions = data;
               }
               $scope.view = 'archive';
             });
@@ -72,9 +66,6 @@ angular.module('FortuitApp', [])
           getPredictions({resolved: true, page: $scope.page}, function(data) {
             if(data !== null) {
               $scope.predictions = data;
-              $scope.predictions.forEach(function(prediction) {
-                prediction.percent = Math.round(prediction.confidence * 100);
-              });
             }
           });
         }
@@ -86,9 +77,8 @@ angular.module('FortuitApp', [])
     };
 
     $scope.submitPrediction = function(confidence) {
-      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: confidence/100}).
+      $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: confidence}).
         success(function(prediction) {
-          prediction.percent = Math.round(prediction.confidence * 100);
           $scope.predictions.unshift(prediction);
         });
     };
