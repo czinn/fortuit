@@ -45,11 +45,13 @@ img.logo {
   cursor: pointer;
   border-style: solid;
   border-color: @nav-color;
-}
 
-#navBar i.selected, #navBar i:active {
-  border-bottom: 5px solid @button-color;
-  color: @button-color;
+  &.selected, &:hover, &:active {
+    color: @button-color;
+  }
+  &.selected {
+    border-bottom: 5px solid @button-color;
+  }
 }
 
 .view {

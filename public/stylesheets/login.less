@@ -28,25 +28,28 @@ input[type="text"], input[type="password"] {
   border-color: fadeout(@button-color, 60%);
   padding: 5px;
   margin: 5px;
+
+  &:hover, &:focus {
+    border-color: @button-color;
+  }
 }
-input[type="text"]:focus, input[type="password"]:focus {
-  border-color: @button-color;
-}
+
 input[type="submit"] {
   color: @bg-color;
   border: 1px solid fadeout(@button-color, 60%);
   background: transparent;
   padding: 5px;
   margin: 5px;
-}
-input[type="submit"]:focus {
-  border-color: @button-color;
-}
-input[type="submit"]:active {
-  background: @bg-color;
-  color: @text-color;
-}
 
+  &:focus, &:hover {
+    background: fadeout(@bg-color, 80%);
+    border-color: @button-color;
+  }
+  &:active {
+    background: @bg-color;
+    color: @text-color;
+  }
+}
 /* Placeholder text */
 
 .placeholder-text {
