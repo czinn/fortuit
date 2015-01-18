@@ -21,9 +21,10 @@ module.exports = function(predictions) {
     for(var j = -2; j <= 2; j++) {
       if(i + j >= 0 && i + j < bins.length) {
         var weight = j * j === 4 ? 1 : (j === 0 ? 6 : 2);
-        count += weight;
-        if(bins[i + j].total > 0)
+        if(bins[i + j].total > 0) {
+          count += weight;
           total += weight * bins[i + j].correct / bins[i + j].total;
+        }
       }
     }
     results.push({
