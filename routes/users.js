@@ -129,7 +129,7 @@ router.post('/:id/add-friend', function(req, res, next) {
     return res.send({'error': 'invalid friend'});
   }
 
-  User.findOne({name: req.body.newFriendName}, function(err, newFriend) {
+  User.findOne({name_lower: req.body.newFriendName.toLowerCase()}, function(err, newFriend) {
     if(err || !newFriend) return res.send({'error': 'could not find user'});
     if(newFriend._id == req.user._id) return res.send({'error': 'cannot friend yourself'});
     if(req.user.friends.indexOf(newFriend._id) != -1) return res.send({'error': 'already on friend list'});

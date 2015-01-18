@@ -1,3 +1,9 @@
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function niceDate(date) {
+  return months[date.getMonth()] + " " + date.getDay() + " " + date.getFullYear() + ", " + date.toLocaleTimeString();
+}
+
 angular.module('FortuitApp', [])
   .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.probabilities = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99];
@@ -28,8 +34,7 @@ angular.module('FortuitApp', [])
           if(!data.error) {
             for (var i=0; i<data.length; i++) {
               var date = new Date(data[i].created);
-              months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-              data[i].niceDate = months[date.getMonth()] + " " + date.getDay() + " " + date.getFullYear() + ", " + date.toLocaleTimeString();
+              data[i].niceDate = niceDate(date);
             }
             cb(data);
           }
@@ -211,6 +216,7 @@ angular.module('FortuitApp', [])
     $scope.submitPrediction = function() {
       $http.post('/api/predictions/', {desc: $scope.new_prediction_desc, confidence: $scope.new_prediction_confidence})
         .success(function(prediction) {
+          prediction.niceDate = niceDate(new Date(prediction.created));
           $scope.predictions.unshift(prediction);
           $scope.new_prediction_desc = "";
           $scope.new_prediction_confidence = 50;
@@ -247,6 +253,7 @@ angular.module('FortuitApp', [])
       $http.post('/api/users/me/add-friend', {newFriendName: $scope.newFriendName})
         .success(function(newFriend) {
           $scope.friends.push(newFriend);
+          $scope.newFriendName = "";
         });
     };
 

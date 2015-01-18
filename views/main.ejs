@@ -39,7 +39,7 @@
               {{ new_prediction_confidence }}%<br>
             </td>
             <td>
-              <textarea placeholder="Describe your prediction (optional)" ng-model="new_prediction_desc"></textarea>
+              <textarea placeholder="What are you predicting?" ng-model="new_prediction_desc"></textarea>
               <input type="range" min="1" max="99" ng-model="new_prediction_confidence"><br>
               <button ng-click="submitPrediction()">Submit prediction</button>
             </td>
