@@ -1,7 +1,7 @@
 <tr>
   <td class="percentage" rowspan="2">{{ prediction.confidence }}%</td>
   <td class="desc">{{ prediction.affair.desc.length > 0 ? prediction.affair.desc : "Prediction of " + prediction.niceDate }}</td>
-  <td class="close" rowspan="2" ng-show="prediction.affair.user == user.id && !prediction.resolved">
+  <td class="close" rowspan="2" ng-show="prediction.affair.user._id == user.id && !prediction.resolved">
     <i class="fa fa-close" ng-click="deletePrediction(prediction)">
   </td>
   <td class="buttons result" rowspan="2" ng-show="prediction.resolved">
@@ -10,8 +10,8 @@
 </tr>
 <tr>
   <td class="buttons" ng-show="prediction.affair.user._id == user.id && prediction.affair.user._id == prediction.user && !prediction.resolved">
-    <button ng-click="resolvePrediction(prediction, true)">Yes</button>
-    <button ng-click="resolvePrediction(prediction, false)">No</button>
+    <button class="resolve" ng-click="resolvePrediction(prediction, true)">Yes</button>
+    <button class="resolve" ng-click="resolvePrediction(prediction, false)">No</button>
   </td>
   <td class="buttons" ng-show="prediction.affair.user._id != prediction.user || (prediction.affair.user._id != user.id && prediction.user != user.id && !prediction.resolved)">
     <span class='affairinfo' ng-show="prediction.affair.user._id != prediction.user">posted by {{ prediction.affair.user.name }}</span>
