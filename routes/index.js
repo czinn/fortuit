@@ -30,6 +30,9 @@ router.post('/create', function(req, res, next) {
   if(req.body.password !== req.body.confirm) {
     return res.render('create', {error: 'Passwords do not match.'});
   }
+  if(req.body.username.length < 3) {
+    return res.render('create', {error: 'Username must be at least three characters.'});
+  }
   User.findOne({name_lower: req.body.username.toLowerCase()}, function(err, user) {
     if(user !== null) {
       return res.render('create', {error: 'Username already in use.'});
